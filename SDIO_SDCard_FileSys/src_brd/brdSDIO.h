@@ -25,7 +25,8 @@
 #define SDIO_CR__ReadBlock    SDIO_CR_CRC_EN_CMD | SDIO_CR_SBITDAT
 #define SDIO_CR__WriteBlock   SDIO_CR_CRC_EN_CMD | SDIO_CR_SBITDAT | SDIO_CR_DIRDATA
 
-#define SDIO_CR__ModeClear   (SDIO_CR_CRC_EN_CMD | SDIO_CR_SBITCMD | SDIO_CR_DIRCMD | SDIO_CR_SBITDAT | SDIO_CR_DIRDATA)
+#define SDIO_CR__ModeClear   (SDIO_CR_CRC_EN_CMD | SDIO_CR_SBITCMD | SDIO_CR_DIRCMD \
+                               | SDIO_CR_SBITDAT | SDIO_CR_DIRDATA)
 
 //--------------    SDIO Block Control -----------------
 

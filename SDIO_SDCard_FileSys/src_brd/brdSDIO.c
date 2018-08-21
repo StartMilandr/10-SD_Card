@@ -72,6 +72,12 @@ void BRD_SDIO_Finit()
   RST_CLK_PCLKcmd (RST_CLK_PCLK_SDIO, DISABLE);
 }
 
+bool BRD_SDIO_IsCardInsert(void)
+{
+  // TODO - проверить, работает ли это
+  return (BRD_SDIO_PORT_D0->RXTX & BRD_SDIO_PIN_D0) != 0;
+}
+
 //  ==================  Таймауты ==================
 //    Параметром BRD_SD_ClockCfg.SysTimerPeriod_1ms необходимо задать период системного таймера в 1мс.
 
@@ -88,12 +94,6 @@ void BRD_SDIO_DelayHandler(void)
 	n = DelayInt_ms;
 	if (n) 
     DelayInt_ms = --n;  
-}
-
-bool BRD_SDIO_IsCardInsert(void)
-{
-  // TODO - проверить, работает ли это
-  return (BRD_SDIO_PORT_D0->RXTX & BRD_SDIO_PIN_D0) != 0;
 }
 
 //  "Встроенный" обработчик системного таймера, применять если в проекте нет своего.

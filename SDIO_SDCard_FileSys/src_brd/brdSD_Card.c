@@ -309,19 +309,16 @@ BRD_SD_RW_Result BRD_SD_CardRead (uint8_t *buff, uint32_t sectorNum, uint8_t  se
       if (!SD_ReadBlock(buff, SD_BLOCK_512)) 
         break;
       buff += SD_BLOCK_512;
-    } 
-    
-    while (--sectorCnt);
-      SD_Send_ClockCycles(8);
-    
+    } while (--sectorCnt);
+       
     // Stop reading MULTIPLE_BLOCK
     //   CMD12 - STOP_TRANSMISSION
     if (cmd == CMD18)
       SD_ExecACMD(CMD12, 0, SD_Resp_48, &resp);
   }
 
-  SD_StopTransfer();
-
+  SD_Send_ClockCycles(8);  
+  
   return sectorCnt ? SD_RW_ERROR : SD_RW_OK;
 }
 
@@ -375,14 +372,14 @@ BRD_SD_RW_Result BRD_SD_CardWrite (const uint8_t *buff, uint32_t sectorNum, uint
     sectorCnt--; 
     buff += SD_BLOCK_512;
   }
-
-  SD_StopTransfer();
-  
+ 
   // Stop reading MULTIPLE_BLOCK
   //   CMD12 - STOP_TRANSMISSION
   if (cmd == CMD25 && (CardType & CT_SDC)) 
     SD_ExecACMD(CMD12, 0, SD_Resp_48, &rc);
 
+  SD_Send_ClockCycles(8);  
+  
   return sectorCnt ? SD_RW_ERROR : SD_RW_OK;
 }
 

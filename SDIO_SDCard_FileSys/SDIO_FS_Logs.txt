@@ -10,8 +10,11 @@ test_diskio(0, 3, 0x20000E08, 0x00000800)
  disk_ioctl(0, GET_BLOCK_SIZE, 0x20000DC4) - ok.
  Size of the erase block is 2048 sectors.
 **** Single sector write test 1 ****
- disk_write(0, 0x20000E08, 0, 1) - failed.
-Sorry the function/compatibility test failed. (rc=6)
+ disk_write(0, 0x20000E08, 0, 1) - ok.
+ disk_ioctl(0, CTRL_SYNC, NULL) - ok.
+ disk_read(0, 0x20000E08, 0, 1) - ok.
+Failed: Read data differs from the data written.
+Sorry the function/compatibility test failed. (rc=10)
 FatFs will not work with this disk driver.
 
 
@@ -30,8 +33,76 @@ test_diskio(0, 3, 0x20000E08, 0x00000800)
  disk_write(0, 0x20000E08, 0, 1) - ok.
  disk_ioctl(0, CTRL_SYNC, NULL) - ok.
  disk_read(0, 0x20000E08, 0, 1) - ok.
-Failed: Read data differs from the data written.
-Sorry the function/compatibility test failed. (rc=10)
+ Data matched.
+**** Multiple sector write test ****
+ disk_write(0, 0x20000E08, 1, 4) - ok.
+ disk_ioctl(0, CTRL_SYNC, NULL) - ok.
+ disk_read(0, 0x20000E08, 1, 4) - ok.
+ Data matched.
+**** Single sector write test (misaligned address) ****
+ disk_write(0, 0x20000E0B, 5, 1) - ok.
+ disk_ioctl(0, CTRL_SYNC, NULL) - ok.
+ disk_read(0, 0x20000E0D, 5, 1) - ok.
+ Data matched.
+**** 4GB barrier test ****
+ disk_write(0, 0x20000E08, 6, 1) - ok.
+ disk_write(0, 0x20001008, 8388614, 1) - ok.
+ disk_ioctl(0, CTRL_SYNC, NULL) - ok.
+ disk_read(0, 0x20000E08, 6, 1) - ok.
+ disk_read(0, 0x20001008, 8388614, 1) - ok.
+ Data matched.
+**** Test cycle 1 of 3 completed ****
+
+**** Test cycle 2 of 3 start ****
+ disk_initalize(0) - ok.
+**** Get drive size ****
+ disk_ioctl(0, GET_SECTOR_COUNT, 0x20000DD0) - ok.
+ Number of sectors on the drive 0 is 15605760.
+**** Get block size ****
+ disk_ioctl(0, GET_BLOCK_SIZE, 0x20000DC4) - ok.
+ Size of the erase block is 2048 sectors.
+**** Single sector write test 1 ****
+ disk_write(0, 0x20000E08, 0, 1) - ok.
+ disk_ioctl(0, CTRL_SYNC, NULL) - ok.
+ disk_read(0, 0x20000E08, 0, 1) - ok.
+ Data matched.
+**** Multiple sector write test ****
+ disk_write(0, 0x20000E08, 1, 4) - ok.
+ disk_ioctl(0, CTRL_SYNC, NULL) - ok.
+ disk_read(0, 0x20000E08, 1, 4) - ok.
+ Data matched.
+**** Single sector write test (misaligned address) ****
+ disk_write(0, 0x20000E0B, 5, 1) - ok.
+ disk_ioctl(0, CTRL_SYNC, NULL) - ok.
+ disk_read(0, 0x20000E0D, 5, 1) - ok.
+ Data matched.
+**** 4GB barrier test ****
+ disk_write(0, 0x20000E08, 6, 1) - ok.
+ disk_write(0, 0x20001008, 8388614, 1) - ok.
+ disk_ioctl(0, CTRL_SYNC, NULL) - ok.
+ disk_read(0, 0x20000E08, 6, 1) - ok.
+ disk_read(0, 0x20001008, 8388614, 1) - ok.
+ Data matched.
+**** Test cycle 2 of 3 completed ****
+
+**** Test cycle 3 of 3 start ****
+ disk_initalize(0) - ok.
+**** Get drive size ****
+ disk_ioctl(0, GET_SECTOR_COUNT, 0x20000DD0) - ok.
+ Number of sectors on the drive 0 is 15605760.
+**** Get block size ****
+ disk_ioctl(0, GET_BLOCK_SIZE, 0x20000DC4) - ok.
+ Size of the erase block is 2048 sectors.
+**** Single sector write test 1 ****
+ disk_write(0, 0x20000E08, 0, 1) - ok.
+ disk_ioctl(0, CTRL_SYNC, NULL) - ok.
+ disk_read(0, 0x20000E08, 0, 1) - ok.
+ Data matched.
+**** Multiple sector write test ****
+ disk_write(0, 0x20000E08, 1, 4) - ok.
+ disk_ioctl(0, CTRL_SYNC, NULL) - ok.                      ERROR!
+ disk_read(0, 0x20000E08, 1, 4) - failed.
+Sorry the function/compatibility test failed. (rc=13)
 FatFs will not work with this disk driver.
 
 

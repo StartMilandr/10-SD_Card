@@ -49,11 +49,10 @@ BRD_SDDrv_Timeouts sdioTimeouts =
 BRD_SD_ClockCfg sdioCardCfg =
 {
   .SysTimerPeriod_1ms    = PERIOD_1MS,       // Value to get 1ms timer period  
-  .SD_CLK_BRG_Detect     = SDIO_BRG_div32,   // 80MHz/32 = 250KHz < 400KHz
-  .SD_CLK_BRG_Transfer   = SDIO_BRG_div16,   // 80MHz/16 = 5MHz - Работает
-    //  При бОльших частотах = disk_write filed
-    //.SD_CLK_BRG_Transfer   = SDIO_BRG_div8,    // 80MHz/8  = 10MHz - Идентификация работает, тест файловой системы НЕТ!
-    //.SD_CLK_BRG_Transfer   = SDIO_BRG_div4,    // 80MHz/2  = 20MHz - Идентификация работает, тест файловой системы НЕТ!
+  .SD_CLK_BRG_Detect     = SDIO_BRG_div256,  // 80MHz/256 = 312,5 KHz < 400KHz
+  .SD_CLK_BRG_Transfer   = SDIO_BRG_div16,   // 80MHz/16  = 5 MHz - Работает всегда
+    //.SD_CLK_BRG_Transfer   = SDIO_BRG_div8,  // 80MHz/8  = 10MHz - Сбой каждый 9-й запуск
+    //.SD_CLK_BRG_Transfer   = SDIO_BRG_div4,  // 80MHz/2  = 20MHz - Идентификация работает, тест файловой системы НЕТ!
                           
   .SD_PowerOn_Delay_ms     = 2,              //     2 ms
   .SD_WaitStatus_Timout_ms = 500,            //   500 ms  
